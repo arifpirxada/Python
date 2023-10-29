@@ -1,0 +1,45 @@
+from tkinter import*
+root=Tk()
+hsize=900
+wsize=1600
+root.geometry(f"{hsize}x{wsize}")
+
+m=Menu(root,bg="orange")
+m1=Menu(m)
+m1.add_command(label="new")
+m1.add_command(label="save")
+m1.add_command(label="save as")
+m1.add_separator()
+m1.add_command(label="exit",command=exit)
+m1.add_command(label="help")
+root.config(menu=m)
+m.add_cascade(label="file",menu=m1)
+
+m2=Menu(m)
+m2.add_command(label="add picture")
+m2.add_command(label="add video")
+m2.add_command(label="add icon")
+m2.add_command(label="add file")
+m.add_cascade(label="more",menu=m2)
+
+m3=Menu(m,bg="yellow")
+m3.add_command(label="Arial")
+m3.add_command(label="Italic")
+m3.add_command(label="Cursive")
+m3.add_command(label="comicsns")
+m.add_cascade(label="font",menu=m3)
+
+m4=Menu(m,bg="white")
+m4.add_command(label="10")
+m4.add_command(label="20")
+m4.add_command(label="30")
+m4.add_command(label="40")
+m4.add_command(label="50")
+m4.add_command(label="60")
+m4.add_command(label="70")
+m4.add_command(label="80")
+m.add_cascade(label="size",menu=m4)
+
+b=Button(root,text="Exit",bg="violet",padx=330,command=exit)
+b.pack(side='bottom')
+root.mainloop()
