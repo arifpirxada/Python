@@ -18,7 +18,6 @@ def check_price(product):
         return product
 
     soup = BeautifulSoup(r.content, "html.parser")
-    print(soup.prettify())
     # Find the price =>
     price = soup.find("span", attrs={"class": "a-price-whole"})
 
