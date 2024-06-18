@@ -2,7 +2,7 @@ from notifypy import Notify
 import requests
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
-
+import random
 
 def check_price(product):
 
@@ -10,15 +10,24 @@ def check_price(product):
         ua = UserAgent()
         r = requests.get(product["url"], headers={'User-Agent': ua.random})
     except requests.exceptions.RequestException as e:
-        print("\033[31mAn error occured while fetching data\033[0m")
+        if isinstance(e, requests.exceptions.ProxyError):
+            print("\033[31mCould not connect to proxy!\033[0m")
+        else:
+            print("\033[31mAn error occured while fetching data\033[0m")
+            
         return product
 
     soup = BeautifulSoup(r.content, "html.parser")
-
+    print(soup.prettify())
     # Find the price =>
-    price_text = soup.find("span", class_="a-price-whole").text
-    price = price_text.replace(",","")
-    price = price.rstrip(".")
+    price = soup.find("span", attrs={"class": "a-price-whole"})
+
+    if not price:
+        print("\033[31mAn error occured while fetching price\033[0m")
+        return product
+
+    price.replace('<span class="a-price-whole">',"")
+    price.replace('<span class="a-price-decimal">.</span>', "")
     price = int(price)
 
     if price < product["expected_price"]:

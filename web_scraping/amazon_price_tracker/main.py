@@ -73,7 +73,7 @@ def main():
 
                         product = price_tracking.check_price(product)
 
-                        print(f"New Price: \033[0m{product["current_price"]}\033[32m")
+                        print(f"Current Price: \033[0m{product["current_price"]}\033[32m")
 
                         if before_price > product["current_price"]:
                             print(f"\033[95mPrice dropped from ₹{before_price} to ₹{product["current_price"]}\033[0m")
