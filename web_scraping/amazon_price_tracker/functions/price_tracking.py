@@ -20,13 +20,16 @@ def check_price(product):
     soup = BeautifulSoup(r.content, "html.parser")
     # Find the price =>
     price = soup.find("span", attrs={"class": "a-price-whole"})
-
-    if not price:
+    if price is None:
         print("\033[31mAn error occured while fetching price\033[0m")
         return product
+    price = str(price)
 
-    price.replace('<span class="a-price-whole">',"")
-    price.replace('<span class="a-price-decimal">.</span>', "")
+    price = price.replace('<span class="a-price-whole">',"")
+    price = price.replace('<span class="a-price-decimal">.</span>', "")
+    price = price.replace('</span>', "")
+    price = price.replace(',', "")
+
     price = int(price)
 
     if price < product["expected_price"]:
@@ -38,7 +41,6 @@ def check_price(product):
         notification.audio = "assets/notification-sound.wav"
 
         notification.send()
-        product["current_price"] = price
     
     elif price < product["current_price"]:
         notification = Notify()
@@ -49,6 +51,6 @@ def check_price(product):
         notification.audio = "assets/notification-sound.wav"
 
         notification.send()
-        product["current_price"] = price
 
+    product["current_price"] = price
     return product

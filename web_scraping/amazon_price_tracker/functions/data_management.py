@@ -82,12 +82,21 @@ def add_product(data):
         return data
     title = title.text.strip()
     
-    current_price = soup.find("span", {"class": "a-price-whole"})
-    if not current_price:
-        print("\033[31mError fetching product price! Please try later\033[0m") # Red text
+    # Find the price =>
+    price = soup.find("span", attrs={"class": "a-price-whole"})
+
+    if price is None:
+        print("\033[31mAn error occured while fetching price\033[0m")
         return data
-    
-    current_price = int(current_price.text.replace(",", "").replace(".", ""))
+    price = str(price)
+
+    price = price.replace('<span class="a-price-whole">',"")
+    price = price.replace('<span class="a-price-decimal">.</span>', "")
+    price = price.replace('</span>', "")
+    price = price.replace(',', "")
+
+    current_price = int(price)
+
 
     data.append({
         "title": title,
