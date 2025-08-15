@@ -1,5 +1,22 @@
-**/__pycache__/
 Todo_Project/data/pass.txt
 Todo_Project/data/pass_setting.txt
 Email_sender/data/
 web_scraping/amazon_price_tracker/data.json
+
+# PyCharm project files
+.idea/
+
+# Python virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# macOS / Windows system files
+.DS_Store
+Thumbs.db
